@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Century Gothic";
+}
+ul{
+    float: left;
+    list-style-type: none;
+}
+ul li{
+    display: inline-block;
+    padding-top: 10pt;
+    padding-right: 10pt;
+}
+ul li a{
+    text-decoration: none;
+    padding: 5px 20px;
+    transition: 0.6s ease;
+}
+ul li a:hover{
+    color: black;
+}
+ul li.active a{
+    color: black;
+}
+.logo img{
+    float: left;
+    width: 15%;
+    height: auto;
+}
+.main{
+    max-width: 1300px;
+    margin: auto;
+}
+.title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.title h1{
+    color: white;
+    font-size: 5vw;
+}
+.button{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.btn{
+    border: 1px solid white;
+    padding: 10px 30px;
+    color: white;
+    text-decoration: none;
+    transition: 0.6s ease;
+}
+.btn:hover{
+    background-color: rgba(0, 204, 255, 0.336);
+    color: black;
+}
+
+@media screen and (max-width:800px) {
+    header{
+        width:100%;
+    }
+    .logo img{
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 470px){
+    .btn{
+        width: 20%;
+        padding: 5pt 15pt;
+    }
+    .title h1{
+        font-size: 50px;
+    }
+}
+@media screen and (max-width: 384px){
+    .button{
+        position: absolute;
+        top: 65%;
+        font-size: small;
+    }
+    ul li{
+        display: grid;
+        position: relative;
+        font-size: small;
+    }
+    .title h1{
+        font-size: 30px;
+    }
+    .logo img{
+        width: 50%;
+        margin-left: 10%;
+    }
+}

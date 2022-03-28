@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Cuaca</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://use.fontawesome.com/89b8dcd205.js"></script>
+</head>
+
+<body>
+      <header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" href="index.html">
+                    <img src="images/logotravel.png" width="100" height="50" class="img-responsive" alt="Cinque Terre">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mr-4">
+                        <li class="nav-link active">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="nav-link" href="destination.html">Destination</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="nav-link" href="artikel.html">Artikel</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="nav-link" href="team.html">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <div class="container p-3 my-3 border">
+        <h1 class="text-right">Weather Forecast</h1>
+        <nav class="navbar nav"></nav>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="container p-3 my-3 border">
+                    <div class="container p-3 my-3 bg-dark text-white">
+                        <div class="input-group mb-3">
+                            <input type="search" aria-label="Search" class="form-control mr-sm-2" id="carikota"
+                                placeholder="Enter the city">
+                            <button id="btncari" class="btn btn-info" type="button" id="button-addon2">Search</button>
+                        </div>
+                        <div class="container text-center">
+                            <h2 class="text-center" id="judul_kota"></h2>
+                            <h2 id="temp" class="display-4"></h2>
+                            <img src="" height="200" />
+                            <h3></h3>
+                            <p>
+                            <p><span id="min"></span><span id="max"></span></p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="container p-3 my-3 border">
+                    <table class="table table-hover">
+                        <tbody id="body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script>
+        api = 'https://api.openweathermap.org/data/2.5/';
+        key = 'e16f411349c2ec5817f41c99514b9153';
+        city = ' ';
+
+        $(document).ready(function () {
+            $("#btncari").click(function () {
+                var value = $("#carikota").val();
+                city = value;
+                $("#judul_kota").text(city);
+
+                $.ajax({
+                    url: api + 'weather?q=' + city + '&appid=' + key + '&units=metric',
+                    //url : 'http://api.openweathermap.org/data/2.5/weather?q=Indonesia&appid=440749ed06ac9f34c3b6689c59af163c',
+                    success: function (res) {
+                        console.log(res)
+                        //console.log(JSON.stringify(res));
+
+                        $('#temp').html(res.main.temp + '&deg;C');
+                        $('#min').html('Min : ' + res.main.temp_min + '&deg;C' + ' ');
+                        $('#max').html('Max : ' + res.main.temp_max + '&deg;C');
+
+                        var icon = res.weather[0].icon;
+                        $('img').attr('src', 'http://openweathermap.org/img/wn/' + icon + '@2x.png');
+                        $('h3').text(res.weather[0].main + ' - ' + res.weather[0].description);
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#btncari").click(function () {
+                $("#body").empty();
+                var value = $("#carikota").val();
+                city = value;
+                $("#judul_kota").text(city);
+
+                $.ajax({
+                    url: api + 'forecast?q=' + city + '&appid=' + key + '&units=metric',
+                    //url : 'http://api.openweathermap.org/data/2.5/weather?q=Indonesia&appid=440749ed06ac9f34c3b6689c59af163c',
+                    success: function (res) {
+                        console.log(res);
+                        for (var i = 0; i < res.list.length; i++) {
+                            var w = res.list[i];
+
+                            //simpan elemen <tr> pada variabel tr
+                            var tr = $('<tr></tr>');
+
+                            // digunakan untuk formating tanggal
+                            var d = new Date(w.dt_txt);
+                            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            var dt = d.getUTCDate() + " " + months[d.getUTCMonth()] + " " + d.getFullYear();
+
+                            var tag = "";
+                            tag += "<td><img src='http://openweathermap.org/img/wn/" + w.weather[0].icon + "@2x.png'></td>";
+                            tag += "<td><i class='fa fa-calendar-check-o' aria-hidden='true'></i>" + dt + "<br />" +
+                                "<i class='fa fa-clock-o' aria-hidden='true'></i>" + w.dt_txt.substring(11, 16) + "</td>";
+                            tag += "<td><h3 class='text-info'>" + w.main.temp + "°C</h3>" +
+                                "<small>Min : " + w.main.temp_min + "°C, Max : " + w.main.temp_max + "°C</small></td>";
+                            tag += "<td>" + w.weather[0].main + "<br />" + w.weather[0].description + "</td>";
+                            $('#body').append(tr.html(tag));
+                        }
+                    }
+                });
+            });
+        });     
+    </script>
+</body>
+
+</html>
